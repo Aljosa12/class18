@@ -1,6 +1,9 @@
+from random import randint, seed
+seed(100)
 from flask import Flask, render_template, request, \
     make_response, redirect, url_for
 from models import User, db
+
 
 db.create_all()
 
@@ -33,10 +36,52 @@ def login_post():
 def index():
     email = request.cookies.get("email")
     user = db.query(User).filter_by(email=email).first()
-    if user is not None:
-        print(user.email, user.name)
-    return "<h1>Glavna stran</h1>"
+    if user is None:
+        response = make_response(
+            redirect(url_for("login_get"))
+        )
+        return response
+    print(user.email, user.name)
+    return render_template("ugibanje.html")
 
+@app.route("/", methods=["POST"])
+def index_post():
+    email = request.cookies.get("email")
+    user = db.query(User).filter_by(email=email).first()
+    if user is None:
+        response = make_response(
+            redirect(url_for("login_get"))
+        )
+        return response
+    vpisana = int(request.form.get("ugibanje"))
+    uganil = False
+    if vpisana > user.secret_number:
+        message = "Ugibana številka je prevelika"
+    elif vpisana == user.secret_number:
+        message = "Bravo, zadel si"
+        uganil = True
+    else:
+        message = "Ugibana številka je prtremajhna"
+    return render_template("rezultat_ugibanja.html", message=message, uganil=uganil)
+
+@app.route("/reset")
+def reset():
+    email = request.cookies.get("email")
+    user = db.query(User).filter_by(email=email).first()
+    if user is None:
+        response = make_response(
+            redirect(url_for("login_get"))
+        )
+        return response
+
+    user.secret_number = randint(0, 100)
+    db.add(user)
+    print(user.secret_number)
+    db.commit()
+    response = make_response(
+        redirect(url_for("index"))
+    )
+    return response
 
 if __name__ == '__main__':
     app.run()

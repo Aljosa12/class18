@@ -1,0 +1,9 @@
+<h1>Odgovor na ugibanje je:</h1>
+
+<h3>{{ message }}</h3>
+
+{% if uganil %}
+    <a href="/reset">Izberi novo skrito  številko</a>
+{% else %}
+    <a href="/">Ponovno ugibaj</a>
+{% endif %}

@@ -9,3 +9,5 @@ class User(db.Model):
     email = db.Column(db.String, unique=True)
     name = db.Column(db.String)
     secret_number = db.Column(db.Integer)
+
+
