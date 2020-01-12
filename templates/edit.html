@@ -1,0 +1,12 @@
+<h1>Pozdravljeni</h1>
+
+<form method="post">
+<h3>email: </h3>
+<input name="email" value="{{ user.email }}">
+<h3>ime: </h3>
+<input name="name" value="{{ user.name }}">
+<h3>secret number: </h3>
+<input value="{{ user.secret_number }}" disabled>
+
+<input type="submit">
+</form>

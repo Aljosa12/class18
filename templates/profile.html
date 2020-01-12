@@ -1,0 +1,14 @@
+<h1>Pozdravljeni</h1>
+
+<h3>email: {{ user.email }}</h3>
+<h3>ime: {{ user.name }}</h3>
+
+<h3>secret number: {{ user.secret_number }}</h3>
+
+
+<a href="edit">Edit</a>
+<br>
+<a href="password">Change password</a>
+<form method="post" action="delete">
+    <input type="submit" value="Izbriši uporabnika">
+</form>

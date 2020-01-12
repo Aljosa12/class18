@@ -1,5 +1,13 @@
-<form method="POST">
+{% if user and user.secret_number %}
+    <form method="POST">
     <input type="number" name="ugibanje" placeholder="skrito stevilo">
     <input type="submit">
 </form>
-
+{% else %}
+    <form method="POST" action="/login">
+    <input type="email" placeholder="email" name="email">
+    <input type="text" placeholder="polno ime" name="name">
+    <input type="password" placeholder="password" name="password">
+    <input type="submit">
+</form>
+{% endif %}

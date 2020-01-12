@@ -1,0 +1,9 @@
+<h1>All users</h1>
+
+<ol>
+
+    {% for user in users %}
+        <li><a href="{{ user.profile_url() }}">{{ user.name }}</a></li>
+    {% endfor %}
+
+</ol>
